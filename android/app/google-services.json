@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "126222831038",
+    "project_id": "kurdbid-c2d9d",
+    "storage_bucket": "kurdbid-c2d9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126222831038:android:1383a5ce89af3b72fe3def",
+        "android_client_info": {
+          "package_name": "com.example.kurdbid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126222831038-ko8raoagjv157eiifrdlh7lgt076bqsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kurdbid",
+            "certificate_hash": "13f9345f799940a80ce47f01ae94764afcfacf73"
+          }
+        },
+        {
+          "client_id": "126222831038-fgktvtpb108ah3lob57lvtkv501u0jsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3ckFLK0pxmLhLMbAzhiGNFAdoHhSgQe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126222831038-fgktvtpb108ah3lob57lvtkv501u0jsi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
