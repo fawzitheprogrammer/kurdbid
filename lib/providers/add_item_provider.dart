@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components/snack_bar.dart';
 import 'package:http/http.dart' as http;
 
-class AppointmentProvider extends ChangeNotifier {
+class ItemAndPostProvider extends ChangeNotifier {
   AdminModel? _adminModel;
   AdminModel get doctorModel => _adminModel!;
 
@@ -22,9 +22,10 @@ class AppointmentProvider extends ChangeNotifier {
 
   static bool isSave = true;
 
-  static String deviceToken = '';
+  String _deviceToken = '';
+  String get deviceToken => _deviceToken;
 
-  static String appointmentDocumentID = '';
+  static String postDocID = '';
   // String get appointmentDocument => _appointmentDocumentID;
   //bool get isSave => _isLoading;
 
@@ -34,7 +35,7 @@ class AppointmentProvider extends ChangeNotifier {
 
   //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  //final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   // String serverKey =
 //;
@@ -46,7 +47,7 @@ class AppointmentProvider extends ChangeNotifier {
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization':
-              'key=AAAA30IK5OU:APA91bH-azU7aSjq7xR78IgylCzfP8Xejt0Y9rn_Ykc3AcgGBdPAx-wL-gt1ORTFdn-3MuToY6S_s_Pp925X45J96LBHwwFFve-2EF_hQv0G38HgcrCN1lIwwk6JGFcZF3y6QYtvbCM8',
+              'key=AAAAHWN3jb4:APA91bGpmvmNtPPPgrZjnFTF7vkDgLYVSTBNM_I5yldoGpmzmW7VVzNhQhoIhcBKCzxxgJkAKfX_dMlfiKw54P_0u3T2uQznMs9oGSo7HT_U7TyBUjB2Y_riuGAzsRd1RkE7jRA5Zcsm',
         },
         body: jsonEncode(
           <String, dynamic>{
@@ -64,7 +65,7 @@ class AppointmentProvider extends ChangeNotifier {
           },
         ),
       );
-      print('done');
+      //print('done');
     } catch (e) {
       print("error push notification");
     }
@@ -91,10 +92,13 @@ class AppointmentProvider extends ChangeNotifier {
     return isFound;
   }
 
-  static void getToken() async {
+  Future<String> getToken() async {
     await FirebaseMessaging.instance.getToken().then((token) {
-      deviceToken = token!;
+      _deviceToken = token!;
+      notifyListeners();
     });
+
+    return deviceToken;
   }
 
   String generateRandomString() {
@@ -175,11 +179,11 @@ class AppointmentProvider extends ChangeNotifier {
       //_appointmentDocumentID = ran;
       //
 
-      appointmentDocumentID = generateRandomString();
+      postDocID = generateRandomString();
 
       await _firebaseFirestore
           .collection("posts")
-          .doc(appointmentDocumentID)
+          .doc(postDocID)
           .set(item.toMap());
       onSuccess();
       notifyListeners();
@@ -234,6 +238,7 @@ class AppointmentProvider extends ChangeNotifier {
         buyerName: '',
         buyerPhone: '',
         buyerPrice: snapshot['startPrice'],
+        deviceToken: snapshot['deviceToken'],
       );
     });
   }
@@ -252,8 +257,7 @@ class AppointmentProvider extends ChangeNotifier {
           .doc(doctorId)
           .collection('posts')
           .doc(documentID)
-          .delete()
-          .then((value) => print('deleted'));
+          .delete();
     });
   }
 

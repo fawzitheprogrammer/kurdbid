@@ -15,6 +15,7 @@ class Item {
   String buyerName;
   String buyerId;
   String buyerPhone;
+  String deviceToken;
   bool isApproved = false;
 
   Item({
@@ -33,6 +34,7 @@ class Item {
     required this.buyerName,
     required this.buyerId,
     required this.buyerPhone,
+    required this.deviceToken,
     required this.isApproved,
   });
 
@@ -54,6 +56,7 @@ class Item {
       buyerName: map['buyerName'],
       buyerPhone: map['buyerPhone'],
       buyerPrice: map['buyerPrice'],
+      deviceToken: map["deviceToken"]
     );
   }
 
@@ -74,7 +77,8 @@ class Item {
       'buyerId': buyerId,
       'buyerName': buyerName,
       'buyerPhone': buyerPhone,
-      'buyerPrice': buyerPrice
+      'buyerPrice': buyerPrice,
+      "deviceToken":deviceToken
     };
   }
 }

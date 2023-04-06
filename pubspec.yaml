@@ -54,6 +54,8 @@ dependencies:
   cloud_firestore: ^4.4.5
   firebase_storage: ^11.0.16
   duration_picker: ^1.1.1
+  restart_app: ^1.1.2
+  flutter_local_notifications: ^8.2.0
 
 
 dev_dependencies:
@@ -84,6 +86,7 @@ flutter:
     - assets/vectors/
     - assets/icons/
     - assets/images/
+    - assets/rive/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

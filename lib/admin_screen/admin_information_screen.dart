@@ -309,7 +309,7 @@ class _AdminInformationScreenState extends State<AdminInformationScreen> {
         adminModel: adminModel,
         profilePic: profileImage!,
         onSuccess: () {
-          ap.saveUserDataToSP().then(
+          ap.saveAdminDataToSP().then(
                 (value) => ap.setSignIn().then(
                       (value) => Navigator.pushAndRemoveUntil(
                         context,

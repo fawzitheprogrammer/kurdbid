@@ -12,10 +12,7 @@ Widget fields(String img, Size size,BoxFit? boxFit) {
         border: Border.all(width: 1.5, color: primaryGreen.shade300),
         borderRadius: BorderRadius.circular(10.r),
         image: DecorationImage(
-          image: AssetImage(getImage(
-            folderName: 'images',
-            fileName: img,
-          )),
+          image: NetworkImage(img),
           fit:boxFit ?? BoxFit.cover,
         ),
       ),

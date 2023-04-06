@@ -42,7 +42,6 @@ class AuthProvider extends ChangeNotifier {
   FirebaseAuth get firebaseAuth => _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-
   // AuthProvider() {
   //   checkSign();
   // }
@@ -148,12 +147,12 @@ class AuthProvider extends ChangeNotifier {
     bool isFound = false;
 
     QuerySnapshot querySnapshot = await _firebaseFirestore
-        .collection(!Role.getRole() ? "users" : "doctors")
+        .collection(!Role.getRole() ? "users" : "admin")
         .get();
 
     for (var i in querySnapshot.docs) {
       if (phoneNumber == i.get('phoneNumber')) {
-        debugPrint(i.get('phoneNumber'));
+        //debugPrint(i.get('phoneNumber'));
 
         isFound = true;
       }
@@ -165,7 +164,7 @@ class AuthProvider extends ChangeNotifier {
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
     DocumentSnapshot snapshot = await _firebaseFirestore
-        .collection(Role.getRole() ? "users" : "doctors")
+        .collection(Role.getRole() ? "users" : "admin")
         .doc(_uid)
         .get();
     _userID = snapshot.id;
@@ -185,7 +184,8 @@ class AuthProvider extends ChangeNotifier {
     required BuildContext context,
     required UserModel userModel,
     required File profilePic,
-    required File idImg,
+    required File frontSide,
+    required File backSide,
     required Function onSuccess,
   }) async {
     _isLoading = true;
@@ -196,8 +196,12 @@ class AuthProvider extends ChangeNotifier {
         userModel.profilePic = value;
         userModel.phoneNumber = _firebaseAuth.currentUser!.phoneNumber!;
       }).then((value) async {
-        await storeFileToStorage("idCards/$_uid", idImg).then((value) {
-          userModel.idCardUrl = value;
+        await storeFileToStorage("frontIdCards/$_uid", frontSide).then((value) {
+          userModel.frontIdCardUrl = value;
+        });
+      }).then((value) async {
+        await storeFileToStorage("backIdCards/$_uid", backSide).then((value) {
+          userModel.backIdCardUrl = value;
         });
       });
 
@@ -206,7 +210,7 @@ class AuthProvider extends ChangeNotifier {
       // uploading to database
       await _firebaseFirestore
           .collection("users")
-          .doc(_uid)
+          .doc(firebaseAuth.currentUser!.uid)
           .set(userModel.toMap())
           .then((value) {
         onSuccess();
@@ -265,11 +269,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-
   // Get Doctor info from firebase
   Future getDoctorDataFromFirestore() async {
     await _firebaseFirestore
-        .collection("doctors")
+        .collection("admin")
         .doc(_firebaseAuth.currentUser!.uid)
         .get()
         .then((DocumentSnapshot snapshot) {
@@ -292,17 +295,19 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _userModel = UserModel(
-          firstName: snapshot['firstName'] ?? '',
-          lastName: snapshot['lastName'] ?? '',
-          gender: snapshot['gender'] ?? '',
-          profilePic: snapshot['profilePic'] ?? '',
-          province: snapshot['province'] ?? '',
-          city: snapshot['city'] ?? '',
-          idCardUrl: snapshot['idCardUrl'] ?? '',
-          idNumber: snapshot['idNumber'] ?? '',
-          phoneNumber: snapshot['phoneNumber'] ?? '',
-          uid: snapshot['uid']);
-      _uid = userModel.uid;
+        firstName: snapshot['firstName'] ?? '',
+        lastName: snapshot['lastName'] ?? '',
+        gender: snapshot['gender'] ?? '',
+        profilePic: snapshot['profilePic'] ?? '',
+        province: snapshot['province'] ?? '',
+        city: snapshot['city'] ?? '',
+        frontIdCardUrl: snapshot['frontIdCardUrl'] ?? '',
+        backIdCardUrl: snapshot['backIdCardUrl'] ?? '',
+        idNumber: snapshot['idNumber'] ?? '',
+        phoneNumber: snapshot['phoneNumber'] ?? '',
+        isApproved: snapshot['isApproved'],
+        deviceToken: snapshot['deviceToken'],
+      );
     });
   }
 
@@ -316,12 +321,12 @@ class AuthProvider extends ChangeNotifier {
     SharedPreferences s = await SharedPreferences.getInstance();
     String data = s.getString("user_model") ?? '';
     _userModel = UserModel.fromMap(jsonDecode(data));
-    _uid = _userModel!.uid;
+    //_uid = _userModel!.uid;
     notifyListeners();
   }
 
   // STORING DOCTOR DATA LOCALLY
-  Future saveDoctorDataToSP() async {
+  Future saveAdminDataToSP() async {
     SharedPreferences s = await SharedPreferences.getInstance();
     await s.setString("doc_model", jsonEncode(adminModel.toMap()));
   }

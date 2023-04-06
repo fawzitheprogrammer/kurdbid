@@ -13,8 +13,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    final bottomNavProvider = Provider.of<BottomNavBar>(context, listen: false);
+    final ap = Provider.of<AuthProvider>(context, listen: true);
+    final bottomNavProvider = Provider.of<BottomNavBar>(context, listen: true);
 
     return Scaffold(
       body: SafeArea(
@@ -47,22 +47,23 @@ class SettingsScreen extends StatelessWidget {
                   height: 22.h,
                 ),
                 primaryButton(
-                    onPressed: () {
-                      ap.userSignOut().then((value) {
-                        bottomNavProvider.bottomNavIndex(0);
-                        ScreenStateManager.setPageOrderID(0);
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RoleScreen(),
-                          ),
-                          (route) => false,
-                        );
-                      });
-                    },
-                    label: 'Log out',
-                    backgroundColor: primaryGreen,
-                    size: Size(double.infinity, 50.h))
+                  onPressed: () {
+                    ap.userSignOut().then((value) {
+                      bottomNavProvider.bottomNavIndex(0);
+                      ScreenStateManager.setPageOrderID(0);
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RoleScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    });
+                  },
+                  label: 'Log out',
+                  backgroundColor: primaryGreen,
+                  size: Size(double.infinity, 50.h),
+                )
               ],
             ),
           ),

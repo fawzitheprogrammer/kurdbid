@@ -1,6 +1,9 @@
 import 'package:kurdbid/public_packages.dart';
 import '../components/components_barrel.dart';
+import '../navigation/navigator.dart';
 import '../providers/providers_barrel.dart';
+import '../role.dart';
+import '../shared_preferences/role.dart';
 
 String? phoneNumberOnBoarding = '+964075070860121';
 
@@ -59,158 +62,164 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       //backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LimitedBox(
-              maxHeight: 250.h,
-              maxWidth: 350.w,
-              child: SizedBox(
-                //alignment: Alignment.topCenter,
-                height: 300.h,
-                width: 450.w,
-                child: Image.asset(
-                  getImage(folderName: 'images', fileName: 'p1.png'),
-                  height: 588.38.h,
-                  width: 289.55.w,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              !isActive
+                  ? Padding(
+                      padding: EdgeInsets.all(16.0.w),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: primaryButton(
+                          onPressed: () => getPage(context, const RoleScreen()),
+                          label:
+                              Role.getRole() ? 'I\'m an admin' : 'I\'m a user',
+                          backgroundColor: primaryGreen,
+                          size: Size(60.w, 30.h),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              LimitedBox(
+                maxHeight: 250.h,
+                maxWidth: 350.w,
+                child: SizedBox(
+                  //alignment: Alignment.topCenter,
+                  height: 300.h,
+                  width: 450.w,
+                  child: Image.asset(
+                    getImage(folderName: 'images', fileName: 'p1.png'),
+                    height: 588.38.h,
+                    width: 289.55.w,
+                  ),
                 ),
               ),
-            ),
-            // AnimatedContainer(
-            //   decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //       colors: [gradientTop, gradientBottom],
-            //       begin: Alignment.topCenter,
-            //       end: Alignment.bottomCenter,
-            //     ),
-            //   ),
-            //   duration: const Duration(milliseconds: 500),
-            //   curve: Curves.easeInOut,
-            // ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // SizedBox(
-                  //   height: 26.h,
-                  // ),
-                  SizedBox(
-                    height: 60.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40.0.w),
-                    child: SizedBox(
-                      width: 314.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            height: 70.h,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              borderRadius: BorderRadius.circular(6.r),
-                            ),
-                            child: Center(
-                                child: Text(
-                              '+964',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
-                                color: primaryGreen,
-                                //fontWeight: FontWeight.w500,
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // SizedBox(
+                    //   height: 26.h,
+                    // ),
+                    SizedBox(
+                      height: 60.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40.0.w),
+                      child: SizedBox(
+                        width: 314.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              height: 70.h,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                borderRadius: BorderRadius.circular(6.r),
                               ),
-                            )),
-                          ),
-                          SizedBox(
-                            width: 6.w,
-                          ),
-                          Expanded(
-                            child: textField(
-                              controller: phoneNumber,
-                              context: context,
-                              isActive: true,
-                              onSubmitted: (value) {
-                                if (phoneNumberRegex.hasMatch(
-                                  countryCode +
-                                      phoneNumber.text
-                                          .replaceAll(' ', '')
-                                          .trim(),
-                                )) {
-                                  sendOtpCode();
-                                  isActive = false;
-
-                                  isLoading = true;
-                                  setState(() {});
-                                } else {
-                                  errorMessage =
-                                      '*Phone number is not in a correct format';
-                                }
-                              },
-                              onTap: () {
-                                //isActive = true;
-
-                                setState(() {});
-                              },
-                              hintText: 'Phone number',
+                              child: Center(
+                                  child: Text(
+                                '+964',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  color: primaryGreen,
+                                  //fontWeight: FontWeight.w500,
+                                ),
+                              )),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 6.w,
+                            ),
+                            Expanded(
+                              child: textField(
+                                controller: phoneNumber,
+                                context: context,
+                                isActive: true,
+                                onSubmitted: (value) {
+                                  if (phoneNumberRegex.hasMatch(
+                                    countryCode +
+                                        phoneNumber.text
+                                            .replaceAll(' ', '')
+                                            .trim(),
+                                  )) {
+                                    sendOtpCode();
+                                    isActive = false;
+
+                                    isLoading = true;
+                                    setState(() {});
+                                  } else {
+                                    errorMessage =
+                                        '*Phone number is not in a correct format';
+                                  }
+                                },
+                                onTap: () {
+                                  //isActive = true;
+
+                                  setState(() {});
+                                },
+                                hintText: 'Phone number',
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  errorMessage.isNotEmpty
-                      ? SizedBox(
-                          height: 34.h,
-                        )
-                      : Container(),
-                  errorMessage.isEmpty
-                      ? Container()
-                      : Text(
-                          errorMessage,
-                          style: GoogleFonts.poppins(
-                            fontSize: 12.sp,
-                            color: Colors.red,
-                            //fontWeight: FontWeight.w500,
+                    errorMessage.isNotEmpty
+                        ? SizedBox(
+                            height: 24.h,
+                          )
+                        : Container(),
+                    errorMessage.isEmpty
+                        ? Container()
+                        : Text(
+                            errorMessage,
+                            style: GoogleFonts.poppins(
+                              fontSize: 12.sp,
+                              color: Colors.red,
+                              //fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                  SizedBox(
-                    height: 34.h,
-                  ),
-                  SizedBox(
-                    width: 314.w,
-                    child: primaryButton(
-                      onPressed: () async {
-                        if (phoneNumberRegex.hasMatch(
-                          countryCode +
-                              phoneNumber.text.replaceAll(' ', '').trim(),
-                        )) {
-                          sendOtpCode();
-                          isActive = false;
-
-                          isLoading = true;
-                          setState(() {});
-                        } else {
-                          errorMessage =
-                              '*Phone number is not in a correct format';
-                        }
-                      },
-                      isLoading: isLoading,
-                      label: 'LOGIN',
-                      backgroundColor: primaryGreen,
-                      size: Size(62.48.w, 60.h),
+                    SizedBox(
+                      height: 24.h,
                     ),
-                  ),
-                  // secondaryButton(
-                  //     label: 'Skip for now',
-                  //     onPressed: () {
-                  //       getPage(context, const AllScreens());
-                  //     }),
-                ],
+                    SizedBox(
+                      width: 314.w,
+                      child: primaryButton(
+                        onPressed: () async {
+                          if (phoneNumberRegex.hasMatch(
+                            countryCode +
+                                phoneNumber.text.replaceAll(' ', '').trim(),
+                          )) {
+                            sendOtpCode();
+                            isActive = false;
+
+                            isLoading = true;
+                            setState(() {});
+                          } else {
+                            errorMessage =
+                                '*Phone number is not in a correct format';
+                          }
+                        },
+                        isLoading: isLoading,
+                        label: 'LOGIN',
+                        backgroundColor: primaryGreen,
+                        size: Size(62.48.w, 60.h),
+                      ),
+                    ),
+                    // secondaryButton(
+                    //     label: 'Skip for now',
+                    //     onPressed: () {
+                    //       getPage(context, const AllScreens());
+                    //     }),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -223,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     phoneNumberOnBoarding = '$countryCode$phoneNum';
     //print(phoneNumberOnBoarding);
     ap.checkExistingPhone(phoneNumberOnBoarding!).then((value) {
-      debugPrint(value.toString());
+      //debugPrint(value.toString());
       if (value) {
         errorMessage = 'This phone number is already registered.';
         isLoading = false;

@@ -243,7 +243,9 @@ class _OTPVerificationState extends State<OTPVerification> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const UserInfromationScreen(),
+                    builder: (context) => const UserInfromationScreen(
+                      isEditScreen: false,
+                    ),
                   ),
                   (route) => false,
                 );
@@ -252,7 +254,7 @@ class _OTPVerificationState extends State<OTPVerification> {
               if (value == true) {
                 // user exists in our app
                 ap.getDoctorDataFromFirestore().then(
-                      (value) => ap.saveDoctorDataToSP().then(
+                      (value) => ap.saveAdminDataToSP().then(
                             (value) => ap.setSignIn().then((value) {
                               ScreenStateManager.setPageOrderID(2);
                               ap.errorBorder = backgroundGrey1;

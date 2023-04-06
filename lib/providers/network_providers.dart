@@ -8,15 +8,15 @@ class Network extends ChangeNotifier {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       isConnected = true;
-      print(isConnected);
+      //print(isConnected);
       notifyListeners();
     } else if (connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
-      print(isConnected);
+      //print(isConnected);
       notifyListeners();
     } else {
       isConnected = false;
-      print(isConnected);
+      //print(isConnected);
       notifyListeners();
     }
   }

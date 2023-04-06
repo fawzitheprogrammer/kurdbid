@@ -5,10 +5,12 @@ class UserModel {
   String profilePic;
   String province;
   String city;
-  String idCardUrl;
+  String frontIdCardUrl;
+  String backIdCardUrl;
   String idNumber;
   String phoneNumber;
-  String uid;
+  String deviceToken;
+  bool isApproved;
 
   UserModel({
     required this.firstName,
@@ -17,24 +19,29 @@ class UserModel {
     required this.profilePic,
     required this.province,
     required this.city,
-    required this.idCardUrl,
+    required this.frontIdCardUrl,
+    required this.backIdCardUrl,
     required this.idNumber,
     required this.phoneNumber,
-    required String this.uid,
+    required this.deviceToken,
+    required this.isApproved,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-        firstName: map['firstName'] ?? '',
-        lastName: map['lastName'] ?? '',
-        gender: map['gender'] ?? '',
-        profilePic: map['profilePic'] ?? '',
-        province: map['province'] ?? '',
-        city: map['city'] ?? '',
-        idCardUrl: map['idCardUrl'] ?? '',
-        idNumber: map['idNumber'] ?? '',
-        phoneNumber: map['phoneNumber'] ?? '',
-        uid: map['uid'] ?? '');
+      firstName: map['firstName'] ?? '',
+      lastName: map['lastName'] ?? '',
+      gender: map['gender'] ?? '',
+      profilePic: map['profilePic'] ?? '',
+      province: map['province'] ?? '',
+      city: map['city'] ?? '',
+      frontIdCardUrl: map['frontIdCardUrl'] ?? '',
+      backIdCardUrl: map['backIdCardUrl'] ?? '',
+      idNumber: map['idNumber'] ?? '',
+      phoneNumber: map['phoneNumber'] ?? '',
+      deviceToken: map['deviceToken'],
+      isApproved: map['isApproved'] ?? '',
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -45,10 +52,12 @@ class UserModel {
       "profilePic": profilePic,
       "province": province,
       "city": city,
-      "idCardUrl": idCardUrl,
+      "frontIdCardUrl": frontIdCardUrl,
+      "backIdCardUrl": backIdCardUrl,
       "idNumber": idNumber,
       "phoneNumber": phoneNumber,
-      "uid": uid
+      "isApproved": isApproved,
+      "deviceToken":deviceToken
     };
   }
 }

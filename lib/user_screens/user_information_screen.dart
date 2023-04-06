@@ -2,15 +2,17 @@ import 'dart:io';
 
 import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/main.dart';
+import 'package:kurdbid/providers/add_item_provider.dart';
 import 'package:kurdbid/providers/providers_barrel.dart';
 import 'package:kurdbid/public_packages.dart';
-import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/user_screens/login_screen.dart';
 
 import '../models/user_model.dart';
 
 class UserInfromationScreen extends StatefulWidget {
-  const UserInfromationScreen({super.key});
+  const UserInfromationScreen({super.key, required this.isEditScreen});
+
+  final bool isEditScreen;
 
   @override
   State<UserInfromationScreen> createState() => _UserInfromationScreenState();
@@ -18,11 +20,12 @@ class UserInfromationScreen extends StatefulWidget {
 
 class _UserInfromationScreenState extends State<UserInfromationScreen> {
   File? profileImage;
-  File? idImage;
+  File? frontIdImage;
+  File? backIdImage;
   final firstNameC = TextEditingController();
   final lastNameC = TextEditingController();
   final provinceC = TextEditingController();
-   final cityC = TextEditingController();
+  final cityC = TextEditingController();
   final idCardC = TextEditingController();
   String? selectedOption;
 
@@ -40,8 +43,13 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     setState(() {});
   }
 
-  void selectIdImage() async {
-    idImage = await pickImage(context);
+  void selectFrontIdImage() async {
+    frontIdImage = await pickImage(context);
+    setState(() {});
+  }
+
+  void selectBackIdImage() async {
+    backIdImage = await pickImage(context);
     setState(() {});
   }
 
@@ -54,6 +62,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   Widget build(BuildContext context) {
     // final isLoading =
     //     Provider.of<AuthProvider>(context, listen: true).isLoading;
+
     return Scaffold(
       body: SafeArea(
         child: !true
@@ -123,7 +132,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 width: 8.w,
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 8.w),
                                 decoration: BoxDecoration(
                                     color: primaryGreen.shade50,
                                     borderRadius: BorderRadius.circular(10)),
@@ -178,7 +188,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                               ),
 
                               GestureDetector(
-                                onTap: () => selectIdImage(),
+                                onTap: () => selectFrontIdImage(),
                                 child: Container(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 14.w),
@@ -195,9 +205,57 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                     children: [
                                       Flexible(
                                         child: textLabel(
-                                          text: idImage == null
-                                              ? 'ID Card'
-                                              : idImage!.path
+                                          text: frontIdImage == null
+                                              ? 'Front Side ID Card'
+                                              : frontIdImage!.path
+                                                  .split('/')
+                                                  .last
+                                                  .toString(),
+                                          color: midGrey1,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      //const Spacer(),
+                                      SvgPicture.asset(
+                                        getImage(
+                                          folderName: 'icons',
+                                          fileName: 'id_add.svg',
+                                        ),
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.blueGrey[(2 + 1) * 100] ??
+                                              Colors.blueGrey,
+                                          BlendMode.srcIn,
+                                        ),
+                                        width: 28.w,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.w,
+                              ),
+                              GestureDetector(
+                                onTap: () => selectBackIdImage(),
+                                child: Container(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 14.w),
+                                  height: 70.h,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1.5,
+                                        color: primaryGreen.shade300),
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: textLabel(
+                                          text: backIdImage == null
+                                              ? 'Back Side ID Card'
+                                              : backIdImage!.path
                                                   .split('/')
                                                   .last
                                                   .toString(),
@@ -261,8 +319,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                             label: 'Register',
                             backgroundColor: primaryGreen,
                             size: Size(
-                                MediaQuery.of(context).size.width * 0.90, 70.h),
-                            onPressed: () =>storeData(),
+                                MediaQuery.of(context).size.width * 0.90,
+                                70.h),
+                            onPressed: () => storeData(),
                           ),
                         )
                       ],
@@ -325,48 +384,61 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   //store user data to database
   void storeData() async {
     final ap = Provider.of<AuthProvider>(context, listen: false);
+    final itemProvider =
+        Provider.of<ItemAndPostProvider>(context, listen: false);
 
-    UserModel userModel = UserModel(
-      firstName: firstNameC.text,
+    itemProvider.getToken().then((value) {
+      UserModel userModel = UserModel(
+        firstName: firstNameC.text,
         lastName: lastNameC.text,
         gender: selectedOption ?? '',
         profilePic: "",
         province: provinceC.text,
-        city:  cityC.text,
-        idCardUrl: "",
-        idNumber:  idCardC.text,
+        city: cityC.text,
+        frontIdCardUrl: "",
+        backIdCardUrl: "",
+        idNumber: idCardC.text,
         phoneNumber: phoneNumberOnBoarding ?? '',
-        uid:  ""
-    );
+        isApproved: false,
+        deviceToken: value,
+      );
 
-    if (profileImage != null && idImage!=null && firstNameC.text.isNotEmpty) {
-      ap.saveUserDataToFirebase(
-        context: context,
-        userModel: userModel,
-        profilePic: profileImage!,
-        idImg: idImage!,
-        onSuccess: () {
-          ap.saveUserDataToSP().then(
-                (value) => ap.setSignIn().then(
-                      (value) => Navigator.pushAndRemoveUntil(
+      if (profileImage != null &&
+          frontIdImage != null &&
+          firstNameC.text.isNotEmpty) {
+        ap.saveUserDataToFirebase(
+          context: context,
+          userModel: userModel,
+          profilePic: profileImage!,
+          frontSide: frontIdImage!,
+          backSide: backIdImage!,
+          onSuccess: () {
+            ap.saveUserDataToSP().then(
+                  (value) => ap.setSignIn().then((value) {
+                    if (widget.isEditScreen == true) {
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const AllScreens(),
                         ),
                         (route) => false,
-                      ),
-                    ),
-              );
-        },
-      );
-    } else {
-      showSnackBar(
-        bgColor: Colors.redAccent,
-        content: 'Please upload your profile photo.',
-        context: context,
-        textColor: Colors.white,
-        // isFalse: true
-      );
-    }
+                      );
+                    }
+                  }),
+                );
+          },
+        );
+      } else {
+        showSnackBar(
+          bgColor: Colors.redAccent,
+          content: 'Please upload your profile photo.',
+          context: context,
+          textColor: Colors.white,
+          // isFalse: true
+        );
+      }
+    });
   }
 }
