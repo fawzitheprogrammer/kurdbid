@@ -394,31 +394,32 @@ class _AddItemState extends State<AddItem> {
     data.then(
       (value) {
         ap.getToken().then((deviceToken) {
-          Item userModel = Item(
-              productName: productName.text,
-              companyName: companyName.text,
-              imgUrl: '',
-              startPrice: startPrice.text,
-              category: selectedOption!,
-              address: value.get('province') + '-' + value.get('city'),
-              duration: dateTime.toString(),
-              description: description.text,
-              isApproved: false,
-              userID: FirebaseAuth.instance.currentUser!.uid,
-              userName: value.get('firstName') + ' ' + value.get('lastName'),
-              userPhone: value.get('phoneNumber'),
-              buyerPrice: startPrice.text,
-              buyerName: '',
-              buyerId: '',
-              buyerPhone: '',
-              deviceToken: deviceToken);
+          Item itemModel = Item(
+            productName: productName.text,
+            companyName: companyName.text,
+            imgUrl: '',
+            startPrice: startPrice.text,
+            category: selectedOption!,
+            address: value.get('province') + '-' + value.get('city'),
+            duration: dateTime.toString(),
+            description: description.text,
+            isApproved: false,
+            userID: FirebaseAuth.instance.currentUser!.uid,
+            userName: value.get('firstName') + ' ' + value.get('lastName'),
+            userPhone: value.get('phoneNumber'),
+            buyerPrice: startPrice.text,
+            buyerName: '',
+            buyerId: '',
+            buyerPhone: '',
+            deviceToken: deviceToken,
+          );
 
           if (itemImage != null) {
             ap.saveItemDataToFirebase(
               context: context,
-              item: userModel,
+              item: itemModel,
               img: itemImage!,
-              userID: ItemAndPostProvider.currentUser!.uid,
+              //userID: ItemAndPostProvider.currentUser!.uid,
               onSuccess: () {
                 getPageRemoveUntil(context, const AllScreens());
               },

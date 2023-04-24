@@ -1,5 +1,8 @@
 import 'package:kurdbid/components/components_barrel.dart';
+import 'package:kurdbid/navigation/navigator.dart';
+import 'package:kurdbid/providers/card_color.dart';
 import 'package:kurdbid/public_packages.dart';
+import 'package:kurdbid/user_screens/item_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,16 +11,24 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser!.uid;
+    final cardColor = Provider.of<CheckCardColor>(context, listen: true);
 
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: Icon(Icons.search),
-      //     onPressed: () {},
-      //   ),
-      // ),
-
-      //   ,
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: primaryGreen,
+              ),
+              onPressed: () {
+                Future.delayed(Duration.zero, () {
+                  cardColor.init();
+                });
+              },
+            ),
+          ]),
       body: SizedBox(
         child: StreamBuilder(
           stream: firebaseFirestore.collection('users').doc(user).snapshots(),
@@ -38,11 +49,7 @@ class HomeScreen extends StatelessWidget {
                     for (var item in fetchData) {
                       DateTime endDate = DateTime.parse(item!.get('duration'));
                       DateTime currentDate = DateTime.now();
-
-                      //print(DateTime.now());
-
-                      Duration difference = endDate.difference(currentDate);
-
+                      Duration difference = endDate.difference(currentDate); //
                       int days = difference.inDays;
                       int hours = difference.inHours % 24;
                       int minutes = difference.inMinutes % 60;
@@ -50,126 +57,137 @@ class HomeScreen extends StatelessWidget {
                       bool timeDone = currentDate.isBefore(endDate) &&
                           item.get('buyerId') == user;
 
-                      Color cardColor() {
-                        if (currentDate.isAfter(endDate) &&
-                            item.get('buyerId') == user) {
-                          return Colors.greenAccent.withAlpha(50);
-                        } else if (endDate == currentDate &&
-                            item.get('buyerId') != user) {
-                          return Colors.redAccent.withAlpha(30);
-                        } else {
-                          return Theme.of(context).colorScheme.primaryContainer;
-                        }
-                      }
+                      cardColor.setValue(currentDate.isAfter(endDate) &&
+                          item.get('buyerId') == user);
 
-                      final itemCard = Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Container(
-                          height: 250.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.r),
-                            color: cardColor(),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(18.0.w),
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    child: Image.network(
-                                      item.get('imgUrl'),
+                      // Color cardColor() {
+                      //   if (currentDate.isAfter(endDate) &&
+                      //       item.get('buyerId') == user) {
+                      //     return Colors.greenAccent.withAlpha(50);
+                      //   } else if (endDate == currentDate &&
+                      //       item.get('buyerId') != user) {
+                      //     return Colors.redAccent.withAlpha(30);
+                      //   } else {
+                      //     return Theme.of(context).colorScheme.primaryContainer;
+                      //   }
+                      // }
+
+                      final itemCard = GestureDetector(
+                        onTap: () => getPage(
+                          context,
+                          ItemScreen(documentID: item.id),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Container(
+                            height: 250.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: cardColor.cardColor,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(18.0.w),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      child: Image.network(
+                                        item.get('imgUrl'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 24.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    textLabel(
-                                      text: item.get('productName'),
-                                      fontSize: 24.sp,
-                                      color: Colors.black87,
-                                    ),
-                                    SizedBox(
-                                      height: 12.w,
-                                    ),
-                                    timeDone
-                                        ? Row(
-                                            children: [
-                                              DurationCard(
-                                                duration: days.toString(),
-                                                format: 'Day',
-                                              ),
-                                              DurationCard(
-                                                duration: hours.toString(),
-                                                format: 'Hour',
-                                              ),
-                                              DurationCard(
-                                                duration: minutes.toString(),
-                                                format: 'Min',
-                                              ),
-                                            ],
-                                          )
-                                        : Row(
-                                            children: [
-                                              textLabel(
-                                                  text: 'You won this item for',
-                                                  color: Colors.green,
-                                                  //fontWeight: FontWeight.w600,
-                                                  fontSize: 14.sp),
-                                            ],
+                                  SizedBox(
+                                    width: 24.w,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      textLabel(
+                                        text: item.get('productName'),
+                                        fontSize: 24.sp,
+                                        color: Colors.black87,
+                                      ),
+                                      SizedBox(
+                                        height: 12.w,
+                                      ),
+                                      timeDone
+                                          ? Row(
+                                              children: [
+                                                DurationCard(
+                                                  duration: days.toString(),
+                                                  format: 'Day',
+                                                ),
+                                                DurationCard(
+                                                  duration: hours.toString(),
+                                                  format: 'Hour',
+                                                ),
+                                                DurationCard(
+                                                  duration: minutes.toString(),
+                                                  format: 'Min',
+                                                ),
+                                              ],
+                                            )
+                                          : Row(
+                                              children: [
+                                                textLabel(
+                                                    text:
+                                                        'You won this item for',
+                                                    color: Colors.green,
+                                                    //fontWeight: FontWeight.w600,
+                                                    fontSize: 14.sp),
+                                              ],
+                                            ),
+                                      timeDone
+                                          ? SizedBox(
+                                              height: 12.w,
+                                            )
+                                          : Container(),
+                                      timeDone
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                textLabel(
+                                                    text: 'Initial Price',
+                                                    color: darkGrey2),
+                                                textLabel(
+                                                  text:
+                                                      '\$${item.get('startPrice')}',
+                                                  color: darkGrey2,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ],
+                                            )
+                                          : Container(),
+                                      timeDone
+                                          ? textLabel(
+                                              text: 'Your Price',
+                                              color: darkGrey2)
+                                          : Container(),
+                                      Row(
+                                        children: [
+                                          textLabel(
+                                            text: '\$${item.get('buyerPrice')}',
+                                            color: !timeDone
+                                                ? Colors.green
+                                                : darkGrey2,
+                                            fontSize: timeDone ? 14.sp : 22.sp,
                                           ),
-                                    timeDone
-                                        ? SizedBox(
-                                            height: 12.w,
-                                          )
-                                        : Container(),
-                                    timeDone
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              textLabel(
-                                                  text: 'Initial Price',
-                                                  color: darkGrey2),
-                                              textLabel(
-                                                text:
-                                                    '\$${item.get('startPrice')}',
-                                                color: darkGrey2,
-                                                fontSize: 14.sp,
-                                              ),
-                                            ],
-                                          )
-                                        : Container(),
-                                    timeDone
-                                        ? textLabel(
-                                            text: 'Your Price',
-                                            color: darkGrey2)
-                                        : Container(),
-                                    Row(
-                                      children: [
-                                        textLabel(
-                                          text: '\$${item.get('buyerPrice')}',
-                                          color: !timeDone
-                                              ? Colors.green
-                                              : darkGrey2,
-                                          fontSize: timeDone ? 14.sp : 22.sp,
-                                        ),
-                                        !timeDone
-                                            ? const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              )
-                                            : Container(),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
+                                          !timeDone
+                                              ? const Icon(
+                                                  Icons.check,
+                                                  color: Colors.green,
+                                                )
+                                              : Container(),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

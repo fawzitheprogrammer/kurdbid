@@ -3,12 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/navigation/navigator.dart';
 import 'package:kurdbid/no_network.dart';
-import 'package:kurdbid/providers/add_item_provider.dart';
-import 'package:kurdbid/providers/approved_post.dart';
-import 'package:kurdbid/providers/approved_user.dart';
-import 'package:kurdbid/providers/auth_provider.dart';
-import 'package:kurdbid/providers/bottom_narbar_provider.dart';
-import 'package:kurdbid/providers/network_providers.dart';
+import 'package:kurdbid/providers/card_color.dart';
+import 'package:kurdbid/providers/providers_barrel.dart';
 import 'package:kurdbid/public_packages.dart';
 import 'package:kurdbid/shared_preferences/role.dart';
 import 'package:kurdbid/shared_preferences/shared_pref_barrel.dart';
@@ -19,7 +15,7 @@ import 'package:restart_app/restart_app.dart';
 import 'admin_screen/item_pending_screen.dart';
 import 'admin_screen/list_of_users.dart';
 import 'admin_screen/profile_screen..dart';
-import 'providers/theme_provider.dart';
+import 'admin_screen/winner_screen.dart';
 import 'push_notification/push_notidication.dart';
 import 'user_screens/screens_barrel.dart';
 
@@ -34,6 +30,7 @@ void main() async {
   await ScreenStateManager.init();
   // await ScreenStateManager.init();
   await Role.init();
+  //Firebase.initializeApp();
   requestPermission();
   loadFCM();
   listenFCM();
@@ -370,6 +367,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ApprovedPost(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CheckCardColor(),
+        ),
       ],
       child: ScreenUtilInit(
         builder: (context, child) {
@@ -428,7 +428,9 @@ class AllScreens extends StatelessWidget {
                     ]
                   : [
                       const ListOfUsers(),
+                      const WinnerScreen(),
                       const PendingItemScreen(),
+
                       // const AddItem(),
                       //const SettingsScreen(),
                       const AdminProfileScreen(),
@@ -486,6 +488,11 @@ class AllScreens extends StatelessWidget {
                         label: 'Home',
                         activeIconName: 'users_outlined.svg',
                         inActiveIconName: 'users_filled.svg',
+                      ),
+                      navBarItem(
+                        label: 'Winners',
+                        activeIconName: 'trophy_outlined.svg',
+                        inActiveIconName: 'trophy_filled.svg',
                       ),
                       navBarItem(
                           label: 'Gavel',

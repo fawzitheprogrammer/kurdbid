@@ -1,4 +1,5 @@
 import 'package:kurdbid/components/components_barrel.dart';
+import 'package:kurdbid/components/progress_indicator.dart';
 import 'package:kurdbid/public_packages.dart';
 
 import '../providers/auth_provider.dart';
@@ -15,84 +16,88 @@ class AdminProfileScreen extends StatelessWidget {
     final ap = Provider.of<AuthProvider>(context, listen: true);
     final bottomNavProvider = Provider.of<BottomNavBar>(context, listen: true);
 
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          child: FutureBuilder(
-            future: firebaseFirestore
-                .collection('admin')
-                .doc(FirebaseAuth.instance.currentUser!.uid)
-                .get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final fetchedData = snapshot.data;
+          child: user != null
+              ? FutureBuilder(
+                  future: firebaseFirestore
+                      .collection('admin')
+                      .doc(user!.uid)
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final fetchedData = snapshot.data;
 
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Spacer(),
-                    CircleAvatar(
-                      radius: 80.r,
-                      backgroundImage:
-                          NetworkImage(fetchedData!.get('profileImgUrl')),
-                    ),
-                    SizedBox(
-                      height: 32.h,
-                    ),
-                    cards(
-                      header: 'Username',
-                      subHeader: fetchedData.get('firstName') +
-                          ' ' +
-                          fetchedData.get('lastName'),
-                      icon: Icons.person,
-                    ),
-                    cards(
-                      header: 'Phone',
-                      subHeader: fetchedData.get('phoneNumber'),
-                      icon: Icons.phone,
-                    ),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Spacer(),
+                          CircleAvatar(
+                            radius: 80.r,
+                            backgroundImage:
+                                NetworkImage(fetchedData!.get('profileImgUrl')),
+                          ),
+                          SizedBox(
+                            height: 32.h,
+                          ),
+                          cards(
+                            header: 'Username',
+                            subHeader: fetchedData.get('firstName') +
+                                ' ' +
+                                fetchedData.get('lastName'),
+                            icon: Icons.person,
+                          ),
+                          cards(
+                            header: 'Phone',
+                            subHeader: fetchedData.get('phoneNumber'),
+                            icon: Icons.phone,
+                          ),
 
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 44.0.w, vertical: 24.h),
-                      child: primaryButton(
-                        onPressed: () {
-                          ap.userSignOut().then((value) {
-                            bottomNavProvider.bottomNavIndex(0);
-                            ScreenStateManager.setPageOrderID(0);
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RoleScreen(),
-                              ),
-                              (route) => false,
-                            );
-                          });
-                        },
-                        label: 'Log out',
-                        backgroundColor: primaryGreen,
-                        size: Size(double.infinity, 50.h),
-                      ),
-                    )
-                    // cards(
-                    //   header: 'Address',
-                    //   subHeader: fetchedData.get('province') +
-                    //       '-' +
-                    //       fetchedData.get('city'),
-                    //   icon: Icons.person,
-                    // )
-                  ],
-                );
-              } else {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: primaryGreen,
-                ));
-              }
-            },
-          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 44.0.w, vertical: 24.h),
+                            child: primaryButton(
+                              onPressed: () {
+                                ap.userSignOut().then((value) {
+                                  bottomNavProvider.bottomNavIndex(0);
+                                  ScreenStateManager.setPageOrderID(0);
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const RoleScreen(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                });
+                              },
+                              label: 'Log out',
+                              backgroundColor: primaryGreen,
+                              size: Size(double.infinity, 50.h),
+                            ),
+                          )
+                          // cards(
+                          //   header: 'Address',
+                          //   subHeader: fetchedData.get('province') +
+                          //       '-' +
+                          //       fetchedData.get('city'),
+                          //   icon: Icons.person,
+                          // )
+                        ],
+                      );
+                    } else {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: primaryGreen,
+                      ));
+                    }
+                  },
+                )
+              : loading(),
         ),
       ),
     );

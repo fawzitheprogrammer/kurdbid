@@ -18,7 +18,7 @@ class ListOfUsers extends StatelessWidget {
         actions: [
           PopupMenuButton(
             //color: primaryGreen,
-            // icon: Icon(color: primaryGreen),
+            icon: Icon(Icons.more_vert, color: primaryGreen),
             //surfaceTintColor: backgroundGrey2,
             onSelected: (value) {
               au.setValue(value);
@@ -161,9 +161,13 @@ class ListOfUsers extends StatelessWidget {
                 userList.add(userCard);
               }
 
-              return ListView(
-                children: userList,
-              );
+              return userList.isNotEmpty
+                  ? ListView(
+                      children: userList,
+                    )
+                  : Center(
+                      child: textLabel(text: 'There is no pending user yet.'),
+                    );
             } else {
               return const CircularProgressIndicator();
             }

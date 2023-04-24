@@ -37,6 +37,7 @@ class ListOfItem extends StatelessWidget {
           stream: firebaseFirestore
               .collection('posts')
               .where('category', isEqualTo: category)
+              .where('isApproved',isEqualTo: true)
               .snapshots()
               .map((querySnapshot) => querySnapshot.docs
                   .where((documentSnapshot) =>
@@ -62,6 +63,8 @@ class ListOfItem extends StatelessWidget {
 
                 //print('$days days, $hours hours, $minutes minutes');
                 // print(difference.inHours % 24);
+
+                //print(item.get('productName'));
 
                 final createdItemCard = GestureDetector(
                   onTap: () => getPage(

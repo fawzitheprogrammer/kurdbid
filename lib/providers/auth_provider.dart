@@ -167,6 +167,7 @@ class AuthProvider extends ChangeNotifier {
         .collection(Role.getRole() ? "users" : "admin")
         .doc(_uid)
         .get();
+
     _userID = snapshot.id;
 
     if (snapshot.exists) {
@@ -270,7 +271,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // Get Doctor info from firebase
-  Future getDoctorDataFromFirestore() async {
+  Future getAdminDataFromFirestore() async {
     await _firebaseFirestore
         .collection("admin")
         .doc(_firebaseAuth.currentUser!.uid)

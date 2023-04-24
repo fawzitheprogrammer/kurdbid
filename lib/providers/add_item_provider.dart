@@ -163,7 +163,7 @@ class ItemAndPostProvider extends ChangeNotifier {
     required Item item,
     required File img,
     //required doctorID,
-    required userID,
+    //required userID,
     required Function onSuccess,
   }) async {
     _isLoading = true;

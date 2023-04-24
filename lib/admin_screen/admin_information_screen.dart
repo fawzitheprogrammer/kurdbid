@@ -42,10 +42,10 @@ class _AdminInformationScreenState extends State<AdminInformationScreen> {
   //   setState(() {});
   // }
 
-  final List<String> _options = [
-    'Male',
-    'Female',
-  ];
+  // final List<String> _options = [
+  //   'Male',
+  //   'Female',
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -299,7 +299,7 @@ class _AdminInformationScreenState extends State<AdminInformationScreen> {
       uid: "",
       firstName: nameController.text,
       phoneNumber: phoneNumberOnBoarding!,
-      lastName:lastNameController.text,
+      lastName: lastNameController.text,
       profileImgUrl: '',
     );
 

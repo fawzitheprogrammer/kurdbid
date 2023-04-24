@@ -1,0 +1,98 @@
+Date : 2023-04-14 13:43:07
+Directory : g:\Local Disk F\Source Codes\Flutter\kurdbid\lib
+Total : 64 files,  5741 codes, 981 comments, 667 blanks, all 7389 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         64 |      5,741 |        981 |        667 |      7,389 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         64 |      5,741 |        981 |        667 |      7,389 |
+| . (Files)                                                                                         |          4 |        731 |         55 |         67 |        853 |
+| admin_screen                                                                                      |          8 |      1,178 |        289 |         84 |      1,551 |
+| components                                                                                        |         16 |        382 |         50 |         63 |        495 |
+| models                                                                                            |          3 |        172 |          3 |         12 |        187 |
+| navigation                                                                                        |          1 |         14 |          0 |          4 |         18 |
+| providers                                                                                         |         12 |        611 |        232 |        188 |      1,031 |
+| push_notification                                                                                 |          1 |         65 |         41 |         33 |        139 |
+| shared_preferences                                                                                |          4 |         52 |         14 |         24 |         90 |
+| theme                                                                                             |          1 |         38 |         62 |          4 |        104 |
+| user_screens                                                                                      |         14 |      2,498 |        235 |        188 |      2,921 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                          | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\admin_information_screen.dart       | Dart     |        193 |        125 |         18 |        336 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\home_screen.dart                    | Dart     |        100 |          8 |          5 |        113 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\id_previewer.dart                   | Dart     |         32 |          0 |          4 |         36 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\item_pending_screen.dart            | Dart     |        154 |         16 |          8 |        178 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\list_of_users.dart                  | Dart     |        144 |         32 |         11 |        187 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\profile_screen..dart                | Dart     |        119 |          9 |          9 |        137 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\single_item.dart                    | Dart     |        247 |         54 |         18 |        319 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\user_information_screen.dart        | Dart     |        189 |         45 |         11 |        245 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\assets_path copy.dart                 | Dart     |         18 |          0 |          1 |         19 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\assets_path.dart                      | Dart     |          3 |         14 |          6 |         23 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\colors.dart                           | Dart     |         37 |          0 |         16 |         53 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\components_barrel.dart                | Dart     |          9 |          1 |          2 |         12 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\icon_button.dart                      | Dart     |         15 |          0 |          3 |         18 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\image_card.dart                       | Dart     |         19 |         19 |          4 |         42 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\pick_image.dart                       | Dart     |         22 |          0 |          4 |         26 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\primary_button.dart                   | Dart     |         44 |          0 |          2 |         46 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\progress_indicator.dart               | Dart     |          9 |          0 |          3 |         12 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\secondary_button.dart                 | Dart     |         14 |          1 |          2 |         17 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\snack_bar.dart                        | Dart     |         33 |          5 |          2 |         40 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\success_screen.dart                   | Dart     |         66 |          2 |          8 |         76 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\text.dart                             | Dart     |         21 |          0 |          2 |         23 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\textfield.dart                        | Dart     |         45 |          5 |          4 |         54 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\time_format.dart                      | Dart     |         15 |          0 |          2 |         17 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\url_launcher.dart                     | Dart     |         12 |          3 |          2 |         17 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\main.dart                                        | Dart     |        478 |         38 |         37 |        553 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\models\admin_model.dart                          | Dart     |         32 |          2 |          4 |         38 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\models\item_mode.dart                            | Dart     |         80 |          1 |          4 |         85 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\models\user_model.dart                           | Dart     |         60 |          0 |          4 |         64 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\navigation\navigator.dart                        | Dart     |         14 |          0 |          4 |         18 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\no_network.dart                                  | Dart     |        118 |         15 |         16 |        149 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\add_item_provider.dart                 | Dart     |        209 |         35 |         31 |        275 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\approved_post.dart                     | Dart     |          9 |          0 |          4 |         13 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\approved_user.dart                     | Dart     |          9 |          0 |          4 |         13 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\auth_provider.dart                     | Dart     |        261 |        128 |        112 |        501 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\bottom_narbar_provider.dart            | Dart     |         19 |          0 |          8 |         27 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\fetch_data_from_firebase.dart          | Dart     |          0 |         52 |          5 |         57 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\network_providers.dart                 | Dart     |         18 |          3 |          3 |         24 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\providers_barrel.dart                  | Dart     |          3 |          1 |          1 |          5 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\save_data_locally.dart                 | Dart     |         18 |          3 |          5 |         26 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\theme_provider.dart                    | Dart     |         18 |          0 |          4 |         22 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\upload_img.dart                        | Dart     |          9 |          1 |          4 |         14 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\verifyOTP.dart                         | Dart     |         38 |          9 |          7 |         54 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\public_packages.dart                             | Dart     |          9 |          1 |          2 |         12 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\push_notification\push_notidication.dart         | Dart     |         65 |         41 |         33 |        139 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\role.dart                                        | Dart     |        126 |          1 |         12 |        139 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\shared_preferences\role.dart                     | Dart     |         25 |         10 |         13 |         48 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\shared_preferences\screens_state_manager.dart    | Dart     |         13 |          4 |          6 |         23 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\shared_preferences\shared_pref_barrel.dart       | Dart     |          2 |          0 |          1 |          3 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\shared_preferences\theme_shared_preferences.dart | Dart     |         12 |          0 |          4 |         16 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\theme\theme_style.dart                           | Dart     |         38 |         62 |          4 |        104 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\add_item.dart                       | Dart     |        360 |         55 |         26 |        441 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\category.dart                       | Dart     |        106 |          8 |          4 |        118 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\home_screen.dart                    | Dart     |        226 |          9 |         18 |        253 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\item_screen.dart                    | Dart     |        337 |         13 |         28 |        378 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\list_of_items.dart                  | Dart     |        172 |         24 |         18 |        214 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\login_screen.dart                   | Dart     |        192 |         34 |         20 |        246 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\my_item_screen.dart                 | Dart     |        194 |         13 |         17 |        224 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\otp_verification_screen.dart        | Dart     |        249 |         25 |         16 |        290 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\profile_screen..dart                | Dart     |         94 |          2 |          6 |        102 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\screen_tobe_shown.dart              | Dart     |         17 |          9 |          4 |         30 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\screens_barrel.dart                 | Dart     |          6 |          5 |          1 |         12 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\settings.dart                       | Dart     |        110 |          0 |          6 |        116 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\terms_and_condition.dart            | Dart     |         49 |          0 |          3 |         52 |
+| g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\user_information_screen.dart        | Dart     |        386 |         38 |         21 |        445 |
+| Total                                                                                             |          |      5,741 |        981 |        667 |      7,389 |
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -1,0 +1,29 @@
+"filename", "language", "Dart", "comment", "blank", "total"
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\id_previewer.dart", "Dart", 32, 0, 4, 36
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\item_pending_screen.dart", "Dart", 81, 15, 5, 101
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\list_of_users.dart", "Dart", 78, 31, 8, 117
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\profile_screen..dart", "Dart", 119, 9, 9, 137
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\single_item.dart", "Dart", 81, 3, 9, 93
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\admin_screen\user_information_screen.dart", "Dart", 88, 13, 5, 106
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\image_card.dart", "Dart", -3, 0, 0, -3
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\progress_indicator.dart", "Dart", 9, 0, 3, 12
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\components\success_screen.dart", "Dart", 66, 2, 8, 76
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\main.dart", "Dart", 78, 15, 7, 100
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\models\item_mode.dart", "Dart", 4, 0, 0, 4
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\models\user_model.dart", "Dart", 9, 0, 0, 9
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\add_item_provider.dart", "Dart", 209, 35, 31, 275
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\appointment_provider.dart", "Dart", -208, -33, -30, -271
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\approved_post.dart", "Dart", 9, 0, 4, 13
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\approved_user.dart", "Dart", 9, 0, 4, 13
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\auth_provider.dart", "Dart", 5, 2, -2, 5
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\providers\network_providers.dart", "Dart", -3, 3, 0, 0
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\push_notification\push_notidication.dart", "Dart", 65, 41, 33, 139
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\add_item.dart", "Dart", -5, 0, 0, -5
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\home_screen.dart", "Dart", 27, 1, 2, 30
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\item_screen.dart", "Dart", 50, 6, 2, 58
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\list_of_items.dart", "Dart", 0, 1, 1, 2
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\login_screen.dart", "Dart", 19, -10, 0, 9
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\otp_verification_screen.dart", "Dart", 2, 0, 0, 2
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\settings.dart", "Dart", 1, 0, 0, 1
+"g:\Local Disk F\Source Codes\Flutter\kurdbid\lib\user_screens\user_information_screen.dart", "Dart", 68, 1, 3, 72
+"Total", "-", 890, 135, 106, 1131

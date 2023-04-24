@@ -173,7 +173,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                   GestureDetector(
                     onTap: codeNotRecived
                         ? () {
-                            // ap.signInWithPhone(context, phoneNumberOnBoarding!);
+                            ap.signInWithPhone(context, phoneNumberOnBoarding!);
                           }
                         : () {},
                     child: !codeNotRecived
@@ -209,6 +209,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   void verifyOtp(BuildContext context, String userOtp) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
+
     ap.verifyOtp(
       context: context,
       verificationId: widget.verificationId,
@@ -218,6 +219,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
         ap.checkExistingUser().then(
           (value) async {
+            // User
             if (Role.getRole() == true) {
               if (value == true) {
                 // user exists in our app
@@ -229,7 +231,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const AllScreens(),
+                                  builder: (context) => const SplashScreen(),
                                 ),
                                 (route) => false,
                               );
@@ -253,7 +255,7 @@ class _OTPVerificationState extends State<OTPVerification> {
             } else {
               if (value == true) {
                 // user exists in our app
-                ap.getDoctorDataFromFirestore().then(
+                ap.getAdminDataFromFirestore().then(
                       (value) => ap.saveAdminDataToSP().then(
                             (value) => ap.setSignIn().then((value) {
                               ScreenStateManager.setPageOrderID(2);
@@ -271,7 +273,7 @@ class _OTPVerificationState extends State<OTPVerification> {
               } else {
                 ScreenStateManager.setPageOrderID(2);
                 ap.errorBorder = backgroundGrey1;
-                // new doctor
+                // new admin
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(

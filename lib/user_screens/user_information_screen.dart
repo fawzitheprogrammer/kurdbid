@@ -421,7 +421,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AllScreens(),
+                          builder: (context) => const SplashScreen(),
                         ),
                         (route) => false,
                       );

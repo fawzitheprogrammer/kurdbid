@@ -6,8 +6,8 @@ import 'package:kurdbid/navigation/navigator.dart';
 import 'package:kurdbid/providers/approved_post.dart';
 import 'package:kurdbid/public_packages.dart';
 
-class PendingItemScreen extends StatelessWidget {
-  const PendingItemScreen({super.key});
+class WinnerScreen extends StatelessWidget {
+  const WinnerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +18,26 @@ class PendingItemScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: [
-          PopupMenuButton(
-            //color: primaryGreen,
-            icon: Icon(Icons.more_vert, color: primaryGreen),
-            //surfaceTintColor: backgroundGrey2,
-            onSelected: (value) {
-              au.setValue(value);
+          // PopupMenuButton(
+          //   //color: primaryGreen,
+          //   icon: Icon(Icons.more_vert, color: primaryGreen),
+          //   //surfaceTintColor: backgroundGrey2,
+          //   onSelected: (value) {
+          //     au.setValue(value);
 
-              //print();
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: true,
-                child: Text('Approved posts'),
-              ),
-              const PopupMenuItem(
-                value: false,
-                child: Text('Pending posts'),
-              ),
-            ],
-          )
+          //     //print();
+          //   },
+          //   itemBuilder: (context) => [
+          //     const PopupMenuItem(
+          //       value: true,
+          //       child: Text('Approved posts'),
+          //     ),
+          //     const PopupMenuItem(
+          //       value: false,
+          //       child: Text('Pending posts'),
+          //     ),
+          //   ],
+          // )
         ],
         elevation: 0.1,
       ),
@@ -51,17 +51,27 @@ class PendingItemScreen extends StatelessWidget {
             if (snapshot.hasData) {
               final data = snapshot.data!.docs;
 
+
+              
+
               List<Widget> allPosts = [];
               for (var post in data) {
+
+
+
                 bool isPostApproved = post.get('isApproved');
-                final singlePost = GestureDetector(
-                  onTap: () => getPage(
-                    context,
-                    SingleItemScreen(
-                      itemId: post.id,
-                    ),
-                  ),
-                  child: Padding(
+
+                 DateTime endDate = DateTime.parse(post!.get('duration'));
+                      DateTime currentDate = DateTime.now();
+                      Duration difference = endDate.difference(currentDate); //
+                      // int days = difference.inDays;
+                      // int hours = difference.inHours % 24;
+                      // int minutes = difference.inMinutes % 60;
+
+
+
+                if(endDate.isBefore(currentDate)){
+                  final singlePost = Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
@@ -103,45 +113,45 @@ class PendingItemScreen extends StatelessWidget {
                                   ),
                                   textLabel(
                                     text:
-                                        'Start Price : \$${post.get('startPrice')}',
+                                        'Owner : ${post.get('userName')}',
                                     fontSize: 14.sp,
                                   ),
                                   textLabel(
-                                    text: 'Brand : ${post.get('companyName')}',
+                                    text: 'Winner : ${post.get('buyerName')}',
                                     fontSize: 14.sp,
                                   ),
                                 ],
                               ),
                             ),
-                            Spacer(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  getImage(
-                                    folderName: 'icons',
-                                    fileName: !isPostApproved
-                                        ? 'pending.svg'
-                                        : 'check.svg',
-                                  ),
-                                  color: !isPostApproved
-                                      ? Colors.orange
-                                      : Colors.green,
-                                  width: 24.w,
-                                ),
-                                SizedBox(
-                                  height: 4.h,
-                                ),
-                                textLabel(
-                                  text:
-                                      !isPostApproved ? 'Pending' : 'Approved',
-                                  fontSize: 10.sp,
-                                  color: !isPostApproved
-                                      ? Colors.orange
-                                      : Colors.green,
-                                )
-                              ],
-                            ),
+                            // Spacer(),
+                            // Column(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     SvgPicture.asset(
+                            //       getImage(
+                            //         folderName: 'icons',
+                            //         fileName: !isPostApproved
+                            //             ? 'pending.svg'
+                            //             : 'check.svg',
+                            //       ),
+                            //       color: !isPostApproved
+                            //           ? Colors.orange
+                            //           : Colors.green,
+                            //       width: 24.w,
+                            //     ),
+                            //     SizedBox(
+                            //       height: 4.h,
+                            //     ),
+                            //     textLabel(
+                            //       text:
+                            //           !isPostApproved ? 'Pending' : 'Approved',
+                            //       fontSize: 10.sp,
+                            //       color: !isPostApproved
+                            //           ? Colors.orange
+                            //           : Colors.green,
+                            //     )
+                            //   ],
+                            // ),
                             // Flexible(
                             //   child: Row(
                             //     mainAxisAlignment: MainAxisAlignment.end,
@@ -159,10 +169,10 @@ class PendingItemScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                );
+                  );
 
                 allPosts.add(singlePost);
+                }
               }
 
               return allPosts.isNotEmpty
