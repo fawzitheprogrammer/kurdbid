@@ -1,4 +1,5 @@
 import 'package:kurdbid/components/components_barrel.dart';
+import 'package:kurdbid/components/progress_indicator.dart';
 import 'package:kurdbid/user_screens/item_screen.dart';
 import 'package:kurdbid/navigation/navigator.dart';
 import 'package:kurdbid/public_packages.dart';
@@ -37,7 +38,7 @@ class ListOfItem extends StatelessWidget {
           stream: firebaseFirestore
               .collection('posts')
               .where('category', isEqualTo: category)
-              .where('isApproved',isEqualTo: true)
+              .where('isApproved', isEqualTo: true)
               .snapshots()
               .map((querySnapshot) => querySnapshot.docs
                   .where((documentSnapshot) =>
@@ -162,14 +163,13 @@ class ListOfItem extends StatelessWidget {
                   ? ListView(
                       children: itemCards,
                     )
-                  : const Center(
-                      child: Text('No posts yet.'),
+                  : Center(
+                      child: loading(),
                     );
             } else {
-              return Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: primaryGreen,
-              ));
+              return const Center(
+                child:  Text('No posts yet.'),
+              );
             }
             // return snapshot.hasData
             //     ?

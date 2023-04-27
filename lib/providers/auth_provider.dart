@@ -146,9 +146,13 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> checkExistingPhone(String phoneNumber) async {
     bool isFound = false;
 
-    QuerySnapshot querySnapshot = await _firebaseFirestore
-        .collection(!Role.getRole() ? "users" : "admin")
-        .get();
+    QuerySnapshot querySnapshot;
+
+    if (false) {
+      querySnapshot = await _firebaseFirestore.collection("users").get();
+    } else {
+      querySnapshot = await _firebaseFirestore.collection("admin").get();
+    }
 
     for (var i in querySnapshot.docs) {
       if (phoneNumber == i.get('phoneNumber')) {
@@ -164,7 +168,7 @@ class AuthProvider extends ChangeNotifier {
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
     DocumentSnapshot snapshot = await _firebaseFirestore
-        .collection(Role.getRole() ? "users" : "admin")
+        .collection("users")
         .doc(_uid)
         .get();
 

@@ -220,13 +220,13 @@ class _OTPVerificationState extends State<OTPVerification> {
         ap.checkExistingUser().then(
           (value) async {
             // User
-            if (Role.getRole() == true) {
+            if (true) {
               if (value == true) {
                 // user exists in our app
                 ap.getUserDataFromFirestore().then(
                       (value) => ap.saveUserDataToSP().then(
                             (value) => ap.setSignIn().then((value) {
-                              ScreenStateManager.setPageOrderID(2);
+                              ScreenStateManager.setPageOrderID(1);
                               ap.errorBorder = backgroundGrey1;
                               Navigator.pushAndRemoveUntil(
                                 context,

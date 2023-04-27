@@ -1,4 +1,5 @@
 import 'package:kurdbid/admin_screen/single_item.dart';
+import 'package:kurdbid/admin_screen/winner_and_owner.dart';
 import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/components/image_card.dart';
 import 'package:kurdbid/components/progress_indicator.dart';
@@ -43,135 +44,127 @@ class WinnerScreen extends StatelessWidget {
       ),
       body: SizedBox(
         child: StreamBuilder(
-          stream: firebaseFirestore
-              .collection('posts')
-              .where('isApproved', isEqualTo: au.approvedPost)
-              .snapshots(),
+          stream: firebaseFirestore.collection('posts').snapshots(),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data!.docs;
 
-
-              
-
               List<Widget> allPosts = [];
               for (var post in data) {
-
-
-
                 bool isPostApproved = post.get('isApproved');
 
-                 DateTime endDate = DateTime.parse(post!.get('duration'));
-                      DateTime currentDate = DateTime.now();
-                      Duration difference = endDate.difference(currentDate); //
-                      // int days = difference.inDays;
-                      // int hours = difference.inHours % 24;
-                      // int minutes = difference.inMinutes % 60;
+                DateTime endDate = DateTime.parse(post!.get('duration'));
+                DateTime currentDate = DateTime.now();
+                Duration difference = endDate.difference(currentDate); //
+                // int days = difference.inDays;
+                // int hours = difference.inHours % 24;
+                // int minutes = difference.inMinutes % 60;
 
-
-
-                if(endDate.isBefore(currentDate)){
+                if (endDate.isBefore(currentDate)) {
                   final singlePost = Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primaryContainer
-                            .withAlpha(80),
-                      ),
-                      height: 150.h,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: EdgeInsets.all(24.0.w),
-                        child: Row(
-                          children: [
-                            LimitedBox(
-                              maxHeight: 100.h,
-                              maxWidth: 100.w,
-                              child: fields(
-                                post.get('imgUrl'),
-                                Size(
-                                  100.w,
-                                  100.h,
+                    child: GestureDetector(
+                      onTap: () => getPage(
+                          context, WinnerAndOwnerScreen(itemId: post.id)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primaryContainer
+                              .withAlpha(80),
+                        ),
+                        height: 150.h,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: EdgeInsets.all(24.0.w),
+                          child: Row(
+                            children: [
+                              LimitedBox(
+                                maxHeight: 100.h,
+                                maxWidth: 100.w,
+                                child: fields(
+                                  post.get('imgUrl'),
+                                  Size(
+                                    100.w,
+                                    100.h,
+                                  ),
+                                  BoxFit.cover,
                                 ),
-                                BoxFit.cover,
                               ),
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Flexible(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  textLabel(
-                                    text: post.get('productName'),
-                                    fontSize: 20.sp,
-                                  ),
-                                  textLabel(
-                                    text:
-                                        'Owner : ${post.get('userName')}',
-                                    fontSize: 14.sp,
-                                  ),
-                                  textLabel(
-                                    text: 'Winner : ${post.get('buyerName')}',
-                                    fontSize: 14.sp,
-                                  ),
-                                ],
+                              SizedBox(
+                                width: 8.w,
                               ),
-                            ),
-                            // Spacer(),
-                            // Column(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     SvgPicture.asset(
-                            //       getImage(
-                            //         folderName: 'icons',
-                            //         fileName: !isPostApproved
-                            //             ? 'pending.svg'
-                            //             : 'check.svg',
-                            //       ),
-                            //       color: !isPostApproved
-                            //           ? Colors.orange
-                            //           : Colors.green,
-                            //       width: 24.w,
-                            //     ),
-                            //     SizedBox(
-                            //       height: 4.h,
-                            //     ),
-                            //     textLabel(
-                            //       text:
-                            //           !isPostApproved ? 'Pending' : 'Approved',
-                            //       fontSize: 10.sp,
-                            //       color: !isPostApproved
-                            //           ? Colors.orange
-                            //           : Colors.green,
-                            //     )
-                            //   ],
-                            // ),
-                            // Flexible(
-                            //   child: Row(
-                            //     mainAxisAlignment: MainAxisAlignment.end,
-                            //     //crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       customButton(() {}, Icons.check, Colors.green),
-                            //       SizedBox(
-                            //         width: 6.w,
-                            //       ),
-                            //       customButton(() {}, Icons.close, Colors.red),
-                            //     ],
-                            //   ),
-                            // )
-                          ],
+                              Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    textLabel(
+                                      text: post.get('productName'),
+                                      fontSize: 20.sp,
+                                    ),
+                                    textLabel(
+                                      text: 'Owner : ${post.get('userName')}',
+                                      fontSize: 14.sp,
+                                    ),
+                                    textLabel(
+                                      text: 'Winner : ${post.get('buyerName')}',
+                                      fontSize: 14.sp,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Spacer(),
+                              // Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     SvgPicture.asset(
+                              //       getImage(
+                              //         folderName: 'icons',
+                              //         fileName: !isPostApproved
+                              //             ? 'pending.svg'
+                              //             : 'check.svg',
+                              //       ),
+                              //       color: !isPostApproved
+                              //           ? Colors.orange
+                              //           : Colors.green,
+                              //       width: 24.w,
+                              //     ),
+                              //     SizedBox(
+                              //       height: 4.h,
+                              //     ),
+                              //     textLabel(
+                              //       text:
+                              //           !isPostApproved ? 'Pending' : 'Approved',
+                              //       fontSize: 10.sp,
+                              //       color: !isPostApproved
+                              //           ? Colors.orange
+                              //           : Colors.green,
+                              //     )
+                              //   ],
+                              // ),
+                              // Flexible(
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.end,
+                              //     //crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       customButton(() {}, Icons.check, Colors.green),
+                              //       SizedBox(
+                              //         width: 6.w,
+                              //       ),
+                              //       customButton(() {}, Icons.close, Colors.red),
+                              //     ],
+                              //   ),
+                              // )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
 
-                allPosts.add(singlePost);
+                  allPosts.add(singlePost);
                 }
               }
 

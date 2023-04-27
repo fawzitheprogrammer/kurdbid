@@ -10,10 +10,8 @@ class AppRouter {
 
     switch (pageID) {
       case 0:
-        return const RoleScreen();
-      case 1:
         return const LoginScreen();
-      case 2:
+      case 1:
         return const AllScreens();
     }
   }

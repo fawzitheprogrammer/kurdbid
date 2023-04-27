@@ -61,8 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .then((value) => checkConnection().then((value) {
               //print(value);
               if (value) {
-                if (Role.getRole() == true &&
-                    FirebaseAuth.instance.currentUser != null) {
+                if (true && FirebaseAuth.instance.currentUser != null) {
                   final data = FirebaseFirestore.instance
                       .collection("users")
                       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -418,7 +417,7 @@ class AllScreens extends StatelessWidget {
               //: currentIndex,
               controller: provider.pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: Role.getRole()
+              children: true
                   ? [
                       const HomeScreen(),
                       CateGoryScreen(),
@@ -457,7 +456,7 @@ class AllScreens extends StatelessWidget {
                 //fontWeight: FontWeight.w600,
               ),
               type: BottomNavigationBarType.fixed,
-              items: Role.getRole()
+              items: true
                   ? [
                       navBarItem(
                         label: 'Home',
