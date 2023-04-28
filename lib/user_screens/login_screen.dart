@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     )) {
                                       sendOtpCode();
                                       isActive = false;
-        
+
                                       isLoading = true;
                                       setState(() {});
                                     } else {
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   onTap: () {
                                     //isActive = true;
-        
+
                                     setState(() {});
                                   },
                                   hintText: 'Phone number',
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             )) {
                               sendOtpCode();
                               isActive = false;
-        
+
                               isLoading = true;
                               setState(() {});
                             } else {
@@ -230,8 +230,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void sendOtpCode() {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     String phoneNum = phoneNumber.text.trim();
+    //print();
     //+9647518070601
-    phoneNumberOnBoarding = '$countryCode$phoneNum';
+    phoneNumberOnBoarding = '$countryCode${phoneNum.replaceAll(' ', '')}';
     //print(phoneNumberOnBoarding);
     ap.checkExistingPhone(phoneNumberOnBoarding!).then((value) {
       //debugPrint(value.toString());

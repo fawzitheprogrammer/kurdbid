@@ -8,6 +8,7 @@ import 'package:kurdbid/providers/fetch_data_from_firebase.dart';
 import 'package:kurdbid/providers/save_data_locally.dart';
 import 'package:kurdbid/providers/verifyOTP.dart';
 import 'package:kurdbid/public_packages.dart';
+import 'package:kurdbid/role.dart';
 import 'package:kurdbid/shared_preferences/role.dart';
 import 'package:kurdbid/user_screens/user_information_screen.dart';
 import '../../components/components_barrel.dart';
@@ -220,7 +221,7 @@ class _OTPVerificationState extends State<OTPVerification> {
         ap.checkExistingUser().then(
           (value) async {
             // User
-            if (true) {
+            if (isUser!=false) {
               if (value == true) {
                 // user exists in our app
                 ap.getUserDataFromFirestore().then(
@@ -258,12 +259,12 @@ class _OTPVerificationState extends State<OTPVerification> {
                 ap.getAdminDataFromFirestore().then(
                       (value) => ap.saveAdminDataToSP().then(
                             (value) => ap.setSignIn().then((value) {
-                              ScreenStateManager.setPageOrderID(2);
+                              ScreenStateManager.setPageOrderID(1);
                               ap.errorBorder = backgroundGrey1;
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const AllScreens(),
+                                  builder: (context) => const SplashScreen(),
                                 ),
                                 (route) => false,
                               );
@@ -271,7 +272,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                           ),
                     );
               } else {
-                ScreenStateManager.setPageOrderID(2);
+                ScreenStateManager.setPageOrderID(1);
                 ap.errorBorder = backgroundGrey1;
                 // new admin
                 Navigator.pushAndRemoveUntil(

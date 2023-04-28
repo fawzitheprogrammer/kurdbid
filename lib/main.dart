@@ -6,6 +6,7 @@ import 'package:kurdbid/no_network.dart';
 import 'package:kurdbid/providers/card_color.dart';
 import 'package:kurdbid/providers/providers_barrel.dart';
 import 'package:kurdbid/public_packages.dart';
+import 'package:kurdbid/role.dart';
 import 'package:kurdbid/shared_preferences/role.dart';
 import 'package:kurdbid/shared_preferences/shared_pref_barrel.dart';
 import 'package:kurdbid/theme/theme_style.dart';
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .then((value) => checkConnection().then((value) {
               //print(value);
               if (value) {
-                if (true && FirebaseAuth.instance.currentUser != null) {
+                if (isUser == true && FirebaseAuth.instance.currentUser != null) {
                   final data = FirebaseFirestore.instance
                       .collection("users")
                       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -417,7 +418,7 @@ class AllScreens extends StatelessWidget {
               //: currentIndex,
               controller: provider.pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: true
+              children: isUser == true
                   ? [
                       const HomeScreen(),
                       CateGoryScreen(),
@@ -456,7 +457,7 @@ class AllScreens extends StatelessWidget {
                 //fontWeight: FontWeight.w600,
               ),
               type: BottomNavigationBarType.fixed,
-              items: true
+              items: isUser == true
                   ? [
                       navBarItem(
                         label: 'Home',

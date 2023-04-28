@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kurdbid/components/colors.dart';
 import 'package:kurdbid/models/admin_model.dart';
 import 'package:kurdbid/providers/upload_img.dart';
+import 'package:kurdbid/role.dart';
 import 'package:kurdbid/shared_preferences/shared_pref_barrel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -148,7 +149,7 @@ class AuthProvider extends ChangeNotifier {
 
     QuerySnapshot querySnapshot;
 
-    if (false) {
+    if (isUser != true) {
       querySnapshot = await _firebaseFirestore.collection("users").get();
     } else {
       querySnapshot = await _firebaseFirestore.collection("admin").get();
@@ -167,10 +168,8 @@ class AuthProvider extends ChangeNotifier {
 
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
-    DocumentSnapshot snapshot = await _firebaseFirestore
-        .collection("users")
-        .doc(_uid)
-        .get();
+    DocumentSnapshot snapshot =
+        await _firebaseFirestore.collection(isUser!=false?"users":"admin").doc(_uid).get();
 
     _userID = snapshot.id;
 

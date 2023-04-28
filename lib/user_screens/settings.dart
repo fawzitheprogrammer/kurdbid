@@ -3,6 +3,7 @@ import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/navigation/navigator.dart';
 import 'package:kurdbid/providers/providers_barrel.dart';
 import 'package:kurdbid/public_packages.dart';
+import 'package:kurdbid/user_screens/login_screen.dart';
 import 'package:kurdbid/user_screens/my_item_screen.dart';
 
 import '../role.dart';
@@ -54,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const RoleScreen(),
+                          builder: (context) => const LoginScreen(),
                         ),
                         (route) => false,
                       );

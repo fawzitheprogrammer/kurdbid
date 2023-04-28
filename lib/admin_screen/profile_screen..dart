@@ -1,6 +1,7 @@
 import 'package:kurdbid/components/components_barrel.dart';
 import 'package:kurdbid/components/progress_indicator.dart';
 import 'package:kurdbid/public_packages.dart';
+import 'package:kurdbid/user_screens/login_screen.dart';
 
 import '../providers/auth_provider.dart';
 import '../providers/bottom_narbar_provider.dart';
@@ -69,7 +70,7 @@ class AdminProfileScreen extends StatelessWidget {
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const RoleScreen(),
+                                      builder: (context) => const LoginScreen(),
                                     ),
                                     (route) => false,
                                   );
